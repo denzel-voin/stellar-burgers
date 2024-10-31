@@ -1,6 +1,8 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import { useNavigate } from 'react-router-dom';
+import { getUserDataSelector } from '../../services/slices/userSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import {
   getConstructorItemsSelector,
@@ -15,23 +17,25 @@ import {
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [, setIsOpen] = useState(false);
-
+  const user = useSelector(getUserDataSelector);
   const constructorItems = useSelector(getConstructorItemsSelector);
   const orderRequest = useSelector(getOrderRequestSelector);
   const orderModalData = useSelector(getOrderResponseSelector);
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     dispatch(orderBurger(constructorItems));
     dispatch(resetConstructorItems());
-    setIsOpen(true);
   };
 
   const closeOrderModal = () => {
     dispatch(resetOrderResponse());
-    setIsOpen(false);
   };
 
   const price = useMemo(
