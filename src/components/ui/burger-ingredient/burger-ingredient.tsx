@@ -1,21 +1,26 @@
+import {
+  AddButton,
+  Counter,
+  CurrencyIcon
+} from '@zlden/react-developer-burger-ui-components';
 import React, { FC, memo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './burger-ingredient.module.css';
 
-import {
-  Counter,
-  CurrencyIcon,
-  AddButton
-} from '@zlden/react-developer-burger-ui-components';
-
 import { TBurgerIngredientUIProps } from './type';
 
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
-  ({ ingredient, count, handleAdd, locationState }) => {
+  ({ ingredient, count, handleAdd, locationState, index }) => {
     const { image, price, name, _id } = ingredient;
+    console.log(index);
 
     return (
-      <li className={styles.container}>
+      <li
+        className={styles.container}
+        data-cy={
+          ingredient.type === 'bun' ? `bun_${index}` : `ingredient_${index}`
+        }
+      >
         <Link
           className={styles.article}
           to={`/ingredients/${_id}`}
