@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 import { TConstructorItems } from './constructorItemsSlice';
 
-type TOrdersState = {
+export type TOrdersState = {
   error: string | null | undefined;
   orderResponse: {
     order: TOrder | null;

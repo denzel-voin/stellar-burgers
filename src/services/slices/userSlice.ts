@@ -82,7 +82,7 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-type TUserState = {
+export type TUserState = {
   isAuthChecked: boolean;
   userData: TUser | null;
   userOrders: TOrder[] | [];
